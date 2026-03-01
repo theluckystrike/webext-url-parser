@@ -1,0 +1,37 @@
+{
+    "name": "webext-url-parser",
+    "version": "0.1.0",
+    "description": "URL pattern matching and manipulation for Chrome extensions — match patterns, glob matching, domain extraction, query string parsing, and URL validation for MV3.",
+    "author": "Zovo <hello@zovo.one>",
+    "license": "MIT",
+    "keywords": [
+        "chrome-extension",
+        "url",
+        "url-parser",
+        "match-pattern",
+        "glob",
+        "domain",
+        "query-string",
+        "manifest-v3",
+        "browser-extension"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/theluckystrike/webext-url-parser.git"
+    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "prepublishOnly": "npm run build"
+    },
+    "devDependencies": {
+        "@types/chrome": "^0.0.260",
+        "typescript": "^5.3.3"
+    }
+}
