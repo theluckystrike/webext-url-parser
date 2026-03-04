@@ -1,8 +1,12 @@
 # webext-url-parser
 
-> URL pattern matching and manipulation for Chrome extensions -- match patterns, domain extraction, query string parsing, and URL validation for MV3.
-
+[![npm version](https://img.shields.io/npm/v/webext-url-parser)](https://npmjs.com/package/webext-url-parser)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
+[![Discord](https://img.shields.io/badge/Discord-Zovo-blueviolet.svg?logo=discord)](https://discord.gg/zovo)
+[![Website](https://img.shields.io/badge/Website-zovo.one-blue)](https://zovo.one)
+
+> URL pattern matching and manipulation for Chrome extensions -- match patterns, domain extraction, query string parsing, and URL validation for MV3.
 
 ## Install
 
@@ -90,3 +94,18 @@ All methods are static.
 ## License
 
 MIT
+
+## See Also
+
+### Related Zovo Repositories
+
+- [chrome-extension-starter-mv3](https://github.com/theluckystrike/chrome-extension-starter-mv3) - Production-ready Chrome extension starter
+- [awesome-chrome-extensions-dev](https://github.com/theluckystrike/awesome-chrome-extensions-dev) - Curated list of Chrome extension development resources
+- [webext-privacy-guard](https://github.com/theluckystrike/webext-privacy-guard) - Privacy utilities
+
+### Zovo Chrome Extensions
+
+- [Zovo Tab Manager](https://chrome.google.com/webstore/detail/zovo-tab-manager) - Manage tabs efficiently
+- [Zovo Focus](https://chrome.google.com/webstore/detail/zovo-focus) - Block distractions
+
+Visit [zovo.one](https://zovo.one) for more information.
