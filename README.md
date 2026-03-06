@@ -1,130 +1,138 @@
 # webext-url-parser
 
-[![npm version](https://img.shields.io/npm/v/webext-url-parser)](https://npmjs.com/package/webext-url-parser)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
-[![Discord](https://img.shields.io/badge/Discord-Zovo-blueviolet.svg?logo=discord)](https://discord.gg/zovo)
-[![Website](https://img.shields.io/badge/Website-zovo.one-blue)](https://zovo.one)
-[![GitHub Stars](https://img.shields.io/github/stars/theluckystrike/webext-url-parser?style=social)](https://github.com/theluckystrike/webext-url-parser)
+URL pattern matching and manipulation for Chrome extensions. Covers match patterns, domain extraction, query string parsing, and URL validation for Manifest V3.
 
-> URL pattern matching and manipulation for Chrome extensions -- match patterns, domain extraction, query string parsing, and URL validation for MV3.
+Built for use inside service workers, content scripts, and popups where you need lightweight URL helpers without pulling in a full routing library.
 
-Part of the [Zovo](https://zovo.one) developer tools family.
 
-## Install
+INSTALL
 
-```bash
+```
 npm install webext-url-parser
 ```
 
-## Usage
+
+USAGE
 
 ```js
 import { URLParser, MatchPattern } from 'webext-url-parser';
-
-// Parse and inspect URLs
-URLParser.getDomain('https://sub.example.com/path');     // 'sub.example.com'
-URLParser.getBaseDomain('https://sub.example.com/path'); // 'example.com'
-URLParser.getExtension('https://example.com/file.pdf');  // 'pdf'
-URLParser.isValid('https://example.com');                // true
-URLParser.isChromeInternal('chrome://settings');         // true
-
-// Query string parsing and URL building
-const params = URLParser.parseQuery('https://example.com?q=hello&page=2');
-// { q: 'hello', page: '2' }
-
-const url = URLParser.buildURL('https://example.com', { q: 'search', lang: 'en' });
-// 'https://example.com/?q=search&lang=en'
-
-// Compare origins
-URLParser.sameOrigin('https://example.com/a', 'https://example.com/b'); // true
-
-// Strip tracking parameters (utm_*, fbclid, gclid, etc.)
-URLParser.stripTracking('https://example.com?utm_source=twitter&page=1');
-// 'https://example.com/?page=1'
-
-// Chrome extension match patterns
-MatchPattern.test('*://*.example.com/*', 'https://sub.example.com/path'); // true
-MatchPattern.test('<all_urls>', 'https://example.com');                   // true
-MatchPattern.testAny(['https://*.google.com/*', 'https://*.github.com/*'], url);
-
-// Create match patterns from domains
-MatchPattern.fromDomain('example.com');          // '*://*.example.com/*'
-MatchPattern.fromDomain('example.com', 'https'); // 'https://*.example.com/*'
-
-// Validate match patterns
-MatchPattern.isValid('https://*.example.com/*'); // true
-MatchPattern.isValid('not-a-pattern');           // false
-
-// Built-in pattern helpers
-MatchPattern.allUrls;  // '<all_urls>'
-MatchPattern.allHttp;  // ['http://*/*', 'https://*/*']
-MatchPattern.allHttps; // 'https://*/*'
 ```
 
-## API
 
-### `URLParser`
+URL PARSING
 
-All methods are static.
+```js
+URLParser.getDomain('https://sub.example.com/path');
+// 'sub.example.com'
 
-| Method | Parameters | Return Type | Description |
-|--------|-----------|-------------|-------------|
-| `getDomain` | `url: string` | `string` | Extract the full hostname from a URL |
-| `getBaseDomain` | `url: string` | `string` | Extract the base domain (no subdomains) |
-| `parseQuery` | `url: string` | `Record<string, string>` | Parse the query string into a key-value object |
-| `buildURL` | `base: string, params: Record<string, string>` | `string` | Build a URL with query parameters |
-| `isValid` | `url: string` | `boolean` | Check if a string is a valid URL |
-| `isChromeInternal` | `url: string` | `boolean` | Check if a URL is a Chrome internal page (`chrome://`, `chrome-extension://`, `about:`) |
-| `getExtension` | `url: string` | `string` | Get the file extension from a URL path |
-| `sameOrigin` | `a: string, b: string` | `boolean` | Check if two URLs share the same origin |
-| `stripTracking` | `url: string` | `string` | Remove tracking parameters (`utm_*`, `fbclid`, `gclid`, `ref`, `mc_cid`, `mc_eid`) |
+URLParser.getBaseDomain('https://sub.example.com/path');
+// 'example.com'
 
-### `MatchPattern`
+URLParser.getExtension('https://example.com/file.pdf');
+// 'pdf'
 
-All methods are static.
+URLParser.isValid('https://example.com');
+// true
 
-| Method | Parameters | Return Type | Description |
-|--------|-----------|-------------|-------------|
-| `test` | `pattern: string, url: string` | `boolean` | Test if a URL matches a Chrome match pattern |
-| `testAny` | `patterns: string[], url: string` | `boolean` | Test if a URL matches any pattern in the array |
-| `fromDomain` | `domain: string, scheme?: string` | `string` | Generate a match pattern from a domain (default scheme: `*`) |
-| `isValid` | `pattern: string` | `boolean` | Validate a Chrome match pattern string |
-| `allUrls` | _(getter)_ | `string` | Returns `'<all_urls>'` |
-| `allHttp` | _(getter)_ | `string[]` | Returns `['http://*/*', 'https://*/*']` |
-| `allHttps` | _(getter)_ | `string` | Returns `'https://*/*'` |
+URLParser.isChromeInternal('chrome://settings');
+// true
+```
 
-## License
 
-MIT
+QUERY STRINGS
 
-## Contributing
+```js
+URLParser.parseQuery('https://example.com?q=hello&page=2');
+// { q: 'hello', page: '2' }
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+URLParser.buildURL('https://example.com', { q: 'search', lang: 'en' });
+// 'https://example.com/?q=search&lang=en'
+```
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+
+ORIGIN COMPARISON
+
+```js
+URLParser.sameOrigin('https://example.com/a', 'https://example.com/b');
+// true
+```
+
+
+STRIP TRACKING PARAMETERS
+
+Removes utm_source, utm_medium, utm_campaign, utm_term, utm_content, fbclid, gclid, ref, mc_cid, and mc_eid from any URL.
+
+```js
+URLParser.stripTracking('https://example.com?utm_source=twitter&page=1');
+// 'https://example.com/?page=1'
+```
+
+
+MATCH PATTERNS
+
+Chrome extension match pattern helpers that follow the format documented at
+https://developer.chrome.com/docs/extensions/develop/concepts/match-patterns
+
+```js
+MatchPattern.test('*://*.example.com/*', 'https://sub.example.com/path');
+// true
+
+MatchPattern.test('<all_urls>', 'https://example.com');
+// true
+
+MatchPattern.testAny(['https://*.google.com/*', 'https://*.github.com/*'], url);
+// true if url matches either pattern
+
+MatchPattern.fromDomain('example.com');
+// '*://*.example.com/*'
+
+MatchPattern.fromDomain('example.com', 'https');
+// 'https://*.example.com/*'
+
+MatchPattern.isValid('https://*.example.com/*');
+// true
+
+MatchPattern.allUrls;
+// '<all_urls>'
+
+MatchPattern.allHttp;
+// ['http://*/*', 'https://*/*']
+
+MatchPattern.allHttps;
+// 'https://*/*'
+```
+
+
+API REFERENCE
+
+URLParser (all static methods)
+
+- getDomain(url) returns the full hostname from a URL string. Returns empty string on invalid input.
+- getBaseDomain(url) returns the registrable domain without subdomains. "sub.example.com" becomes "example.com".
+- parseQuery(url) returns a plain object of key/value pairs from the query string. Returns empty object on invalid input.
+- buildURL(base, params) takes a base URL string and a Record<string, string> of query params, returns the assembled URL.
+- isValid(url) returns true if the string can be parsed by the URL constructor.
+- isChromeInternal(url) returns true for chrome://, chrome-extension://, and about: URLs.
+- getExtension(url) returns the file extension from the URL pathname, lowercased. Returns empty string if none.
+- sameOrigin(a, b) returns true if both URLs share the same origin (scheme + host + port).
+- stripTracking(url) returns a cleaned URL with common tracking parameters removed.
+
+MatchPattern (all static methods and getters)
+
+- test(pattern, url) returns true if the URL matches the given Chrome match pattern.
+- testAny(patterns, url) returns true if the URL matches any pattern in the array.
+- fromDomain(domain, scheme?) returns a match pattern string. Scheme defaults to "*".
+- isValid(pattern) returns true if the string is a syntactically valid Chrome match pattern.
+- allUrls (getter) returns the string "<all_urls>".
+- allHttp (getter) returns ["http://*/*", "https://*/*"].
+- allHttps (getter) returns "https://*/*".
+
+
+LICENSE
+
+MIT. See LICENSE file.
+
 
 ---
 
-## See Also
-
-### Related Zovo Repositories
-
-- [chrome-extension-starter-mv3](https://github.com/theluckystrike/chrome-extension-starter-mv3) - Production-ready Chrome extension starter
-- [awesome-chrome-extensions-dev](https://github.com/theluckystrike/awesome-chrome-extensions-dev) - Curated list of Chrome extension development resources
-- [webext-privacy-guard](https://github.com/theluckystrike/webext-privacy-guard) - Privacy utilities
-
-### Zovo Chrome Extensions
-
-- [Zovo Tab Manager](https://chrome.google.com/webstore/detail/zovo-tab-manager) - Manage tabs efficiently
-- [Zovo Focus](https://chrome.google.com/webstore/detail/zovo-focus) - Block distractions
-
-Visit [zovo.one](https://zovo.one) for more information.
-
----
-
-Built by [Zovo](https://zovo.one)
+Part of the Zovo open source family at https://zovo.one
