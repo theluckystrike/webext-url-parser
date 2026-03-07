@@ -9,20 +9,17 @@ URL pattern matching and manipulation for Chrome extensions. Covers match patter
 
 Built for use inside service workers, content scripts, and popups where you need lightweight URL helpers without pulling in a full routing library.
 
-
 INSTALL
 
 ```
 npm install webext-url-parser
 ```
 
-
 USAGE
 
 ```js
 import { URLParser, MatchPattern } from 'webext-url-parser';
 ```
-
 
 URL PARSING
 
@@ -43,7 +40,6 @@ URLParser.isChromeInternal('chrome://settings');
 // true
 ```
 
-
 QUERY STRINGS
 
 ```js
@@ -54,14 +50,12 @@ URLParser.buildURL('https://example.com', { q: 'search', lang: 'en' });
 // 'https://example.com/?q=search&lang=en'
 ```
 
-
 ORIGIN COMPARISON
 
 ```js
 URLParser.sameOrigin('https://example.com/a', 'https://example.com/b');
 // true
 ```
-
 
 STRIP TRACKING PARAMETERS
 
@@ -71,7 +65,6 @@ Removes utm_source, utm_medium, utm_campaign, utm_term, utm_content, fbclid, gcl
 URLParser.stripTracking('https://example.com?utm_source=twitter&page=1');
 // 'https://example.com/?page=1'
 ```
-
 
 MATCH PATTERNS
 
@@ -107,7 +100,6 @@ MatchPattern.allHttps;
 // 'https://*/*'
 ```
 
-
 API REFERENCE
 
 URLParser (all static methods)
@@ -132,11 +124,9 @@ MatchPattern (all static methods and getters)
 - allHttp (getter) returns ["http://*/*", "https://*/*"].
 - allHttps (getter) returns "https://*/*".
 
-
 LICENSE
 
 MIT. See LICENSE file.
-
 
 ---
 
