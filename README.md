@@ -1,3 +1,8 @@
+[![CI](https://github.com/theluckystrike/webext-url-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/theluckystrike/webext-url-parser/actions)
+[![npm](https://img.shields.io/npm/v/webext-url-parser)](https://www.npmjs.com/package/webext-url-parser)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+
 # webext-url-parser
 
 URL pattern matching and manipulation for Chrome extensions. Covers match patterns, domain extraction, query string parsing, and URL validation for Manifest V3.
@@ -136,3 +141,11 @@ MIT. See LICENSE file.
 ---
 
 Part of the Zovo open source family at https://zovo.one
+
+## License
+
+MIT
+
+---
+
+Built by [theluckystrike](https://github.com/theluckystrike) — [zovo.one](https://zovo.one)
